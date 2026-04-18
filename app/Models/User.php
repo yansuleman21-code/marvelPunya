@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -52,8 +53,8 @@ class User extends Authenticatable
         return $this->hasMany(Transaksi::class);
     }
 
-    public function LogAktivitas()
+    public function logAktivitas()
     {
-        
+        return $this->hasMany(LogAktivitas::class);
     }
 }

@@ -1,4 +1,4 @@
-<a href="{{ route('area.create') }}">Tambah Area</a>
+<a href="{{ route('area-parkir.create') }}">Tambah Area</a>
 
 @if(session('success'))
     <p>{{ session('success') }}</p>
@@ -20,9 +20,9 @@
         <td>{{ $item->kapasitas }}</td>
         <td>{{ $item->lokasi }}</td>
         <td>
-            <a href="{{ route('area.edit', $item->id) }}">Edit</a>
+            <a href="{{ route('area-parkir.edit', $item->id) }}">Edit</a>
 
-            <form action="{{ route('area.destroy', $item->id) }}" method="POST" style="display:inline">
+            <form action="{{ route('area-parkir.destroy', $item->id) }}" method="POST" style="display:inline">
                 @csrf
                 @method('delete')
                 <button type="submit">Hapus</button>

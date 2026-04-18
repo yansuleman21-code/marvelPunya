@@ -1,24 +1,12 @@
 <?php
-namespace App\Http\Controllers;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+namespace App\Models;
+use Illuminate\Database\Eloquent\Model;
 
-class AuthController extends Controller {
-    public function showLogin() { return view('auth.login'); }
+class Transaksi extends Model {
+    protected $fillable = ['kendaraan_id', 'tarif_id', 'area_parkir_id', 'waktu_masuk', 'waktu_keluar', 'durasi', 'biaya', 'user_id'];
 
-    public function login(Request $request) {
-        $credentials = $request->only('email', 'password');
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-            return redirect('/')->with('success', 'Login berhasil');
-        }
-        return back()->with('error', 'Email atau password salah');
-    }
-
-    public function logout(Request $request) {
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        return redirect('/login');
-    }
+    public function kendaraan() { return $this->belongsTo(Kendaraan::class); }
+    public function tarif() { return $this->belongsTo(Tarif::class); }
+    public function areaParkir() { return $this->belongsTo(AreaParkir::class); }
+    public function user() { return $this->belongsTo(User::class); }
 }
