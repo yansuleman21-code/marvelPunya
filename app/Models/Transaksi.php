@@ -1,47 +1,24 @@
 <?php
-namespace App\Models;
+namespace App\Http\Controllers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
+class AuthController extends Controller {
+    public function showLogin() { return view('auth.login'); }
 
-class Transaksi extends Model
-{
-    protected $fillable = [
-        'kode_transaksi',
-        'tanggal',
-        'kendaraan',
-        'plat_nomor',
-        'tarif_id',
-        'durasi_jam',
-        'total_harga',
-        'metode_bayar'
-    ];
+    public function login(Request $request) {
+        $credentials = $request->only('email', 'password');
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect('/')->with('success', 'Login berhasil');
+        }
+        return back()->with('error', 'Email atau password salah');
+    }
 
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($model) {
-
-            DB::transaction(function () use ($model) {
-
-                $tanggal = now()->format('Ymd');
-
-                $last = DB::table('transaksis')
-                    ->whereDate('created_at', now())
-                    ->orderBy('id', 'desc')
-                    ->lockForUpdate()
-                    ->first();
-
-                if ($last && $last->kode_transaksi) {
-                    $lastNumber = (int) substr($last->kode_transaksi, -4);
-                    $no = str_pad($lastNumber + 1, 4, '0', STR_PAD_LEFT);
-                } else {
-                    $no = '0001';
-                }
-
-                $model->kode_transaksi = "TRX-$tanggal-$no";
-            });
-        });
+    public function logout(Request $request) {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/login');
     }
 }

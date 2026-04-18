@@ -9,28 +9,19 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-        Schema::create('transaksis', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('kendaraa_id')->constrained('kendaraans');
-            $table->foreignId('tarif_id')->constrained('tarifs');
-            $table->foreignId('area_parkir_id')->constrained('area_parkirs');
-            
-            
-            $table->datetime('waktu_masuk');
-            $table->datetime('waktu_keluar')->nullable();
-
-
-            $table->integer('durasi')->nullable();
-            $table->decimal('biaya', 10, 2)->nullable();
-
-
-            $table->foreignId('user_id')->constrained('users');
-            
-
-            $table->timestamps();
-        });
+    public function up(): void {
+    Schema::create('transaksis', function (Blueprint $table) {
+        $table->id();
+        $table->foreignId('kendaraan_id')->constrained('kendaraans');
+        $table->foreignId('tarif_id')->constrained('tarifs');
+        $table->foreignId('area_parkir_id')->constrained('area_parkirs');
+        $table->dateTime('waktu_masuk');
+        $table->dateTime('waktu_keluar')->nullable();
+        $table->integer('durasi')->nullable();
+        $table->decimal('biaya', 10, 2)->nullable();
+        $table->foreignId('user_id')->constrained('users');
+        $table->timestamps();
+    });
     }
 
     /**

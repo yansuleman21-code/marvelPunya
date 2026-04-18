@@ -9,15 +9,14 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-        Schema::create('kendaraans', function (Blueprint $table) {
-            $table->id();
-            $table->string('no_polisi')->unique();
-            $table->enum('jenis', ['motor', 'mobil']);
-            $table->string('warna');
-            $table->timestamps();
-        });
+    public function up(): void {
+    Schema::create('kendaraans', function (Blueprint $table) {
+        $table->id();
+        $table->string('no_polisi')->unique();
+        $table->enum('jenis', ['motor', 'mobil']);
+        $table->string('warna');
+        $table->timestamps();
+    });
     }
 
     /**
