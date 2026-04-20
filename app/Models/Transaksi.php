@@ -3,7 +3,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 class Transaksi extends Model {
-    protected $fillable = ['kendaraan_id', 'tarif_id', 'area_parkir_id', 'waktu_masuk', 'waktu_keluar', 'durasi', 'biaya', 'user_id'];
+    protected $fillable = ['kode_transaksi', 'plat_nomor','kendaraan_id', 'tarif_id', 'area_parkir_id', 'waktu_masuk', 'waktu_keluar', 'durasi', 'biaya', 'user_id'];
 
     public function kendaraan() { return $this->belongsTo(Kendaraan::class); }
     public function tarif() { return $this->belongsTo(Tarif::class); }

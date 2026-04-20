@@ -1,7 +1,9 @@
 <?php
 namespace App\Http\Controllers;
+
 use App\Models\{Transaksi, Kendaraan, Tarif, AreaParkir};
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class TransaksiController extends Controller {
     public function index() {
@@ -17,7 +19,12 @@ class TransaksiController extends Controller {
     }
 
     public function store(Request $request) {
+        $kodeTransaksi = 'TRX-' . strtoupper(\Illuminate\Support\Str::random(6));
+        $kendaraanDipilih = \App\Models\Kendaraan::findOrFail($request->kendaraan_id);
+
         Transaksi::create([
+            'kode_transaksi' => $kodeTransaksi,
+            'plat_nomor' => $kendaraanDipilih->no_polisi,
             'kendaraan_id' => $request->kendaraan_id,
             'tarif_id' => $request->tarif_id,
             'area_parkir_id' => $request->area_parkir_id,

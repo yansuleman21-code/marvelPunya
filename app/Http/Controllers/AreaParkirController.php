@@ -22,7 +22,7 @@ class AreaParkirController extends Controller
     {
         AreaParkir::create($request->all());
 
-        return redirect()->route('area.index')
+        return redirect()->route('area-parkir.index')
             ->with('success', 'Data berhasil ditambahkan');
     }
 
@@ -37,7 +37,7 @@ class AreaParkirController extends Controller
         $data = AreaParkir::findOrFail($id);
         $data->update($request->all());
 
-        return redirect()->route('area.index')
+        return redirect()->route('area-parkir.index')
             ->with('success', 'Data berhasil diupdate');
     }
 
@@ -46,7 +46,7 @@ class AreaParkirController extends Controller
         $data = AreaParkir::findOrFail($id);
         $data->delete();
 
-        return redirect()->route('area.index')
+        return redirect()->route('area-parkir.index')
             ->with('success', 'Data berhasil dihapus');
     }
 }
